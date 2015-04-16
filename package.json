@@ -1,0 +1,21 @@
+{
+  "name": "formatInterval",
+  "version": "0.0.1",
+  "description": "moment.js plugin to format moment intervals",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "moment",
+    "format",
+    "interval"
+  ],
+  "author": "Christoph Hellweg",
+  "license": "ISC",
+  "devDependencies": {
+    "cldr": "^3.0.0",
+    "grunt": "^0.4.5",
+    "moment": "^2.9.0"
+  }
+}
