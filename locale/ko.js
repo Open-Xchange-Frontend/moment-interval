@@ -1,21 +1,16 @@
 {
     "hm": {
-        "a": "a h:mm ~ a h:mm",
-        "h": "a h:mm~h:mm",
-        "m": "a h:mm~h:mm"
+        "a": 81,
+        "h": 82,
+        "m": 81
     },
     "Hm": {
-        "H": "HH:mm ~ HH:mm",
-        "m": "HH:mm ~ HH:mm"
-    },
-    "yMMMd": {
-        "d": "y년 M월 d일~d일",
-        "M": "y년 M월 d일 ~ M월 d일",
-        "y": "y년 M월 d일 ~ y년 M월 d일"
+        "H": 83,
+        "m": 82
     },
     "yMMMEd": {
-        "d": "y년 M월 d일 (E) ~ d일 (E)",
-        "M": "y년 M월 d일 (E) ~ M월 d일 (E)",
-        "y": "y년 M월 d일 (E) ~ y년 M월 d일 (E)"
+        "d": 84,
+        "M": 85,
+        "y": 86
     }
 }

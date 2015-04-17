@@ -1,21 +1,16 @@
 {
-    "yMMMd": {
-        "d": "MMM d – d, y",
-        "M": "MMM d – MMM d, y",
-        "y": "MMM d, y – MMM d, y"
-    },
     "yMMMEd": {
-        "d": "E, MMM d – E, MMM d, y",
-        "M": "E, MMM d – E, MMM d, y",
-        "y": "E, MMM d, y – E, MMM d, y"
+        "d": 42,
+        "M": 42,
+        "y": 4
     },
     "hm": {
-        "a": "h:mm a – h:mm a",
-        "h": "h:mm – h:mm a",
-        "m": "h:mm – h:mm a"
+        "a": 0,
+        "h": 15,
+        "m": 15
     },
     "Hm": {
-        "H": "HH:mm – HH:mm",
-        "m": "HH:mm – HH:mm"
+        "H": 41,
+        "m": 41
     }
 }

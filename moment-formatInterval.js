@@ -15,31 +15,35 @@
 	// Do not load moment-timezone a second time.
 	if (moment.fn.formatInterval !== undefined) { return moment; }
 
-	// set default interval values
-	moment.locale('en', {
-		interval: {
-		    'hm': {
-		        'a': 'h:mm a – h:mm a',
-		        'h': 'h:mm – h:mm a',
-		        'm': 'h:mm – h:mm a'
-		    },
-		    'Hm': {
-		        'H': 'HH:mm – HH:mm',
-		        'm': 'HH:mm – HH:mm'
-		    },
-		    'yMMMd': {
-		        'd': 'MMM d – d, y',
-		        'M': 'MMM d – MMM d, y',
-		        'y': 'MMM d, y – MMM d, y'
-		    },
-		    'yMMMEd': {
-		        'd': 'E, MMM d – E, MMM d, y',
-		        'M': 'E, MMM d – E, MMM d, y',
-		        'y': 'E, MMM d, y – E, MMM d, y'
-		    }
-		}
-	});
-	
+	var regex = new RegExp("(G+|y+|Y+|M+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+|z+|Z+|v+|V+)|'((?:[^']|'')+)'|('')", 'g');
+
+	// convert cldr date format to moment format
+	function convertFormatToMoment(format) {
+		return format;
+	}
+
+	function getFormat(end) {
+
+	}
+
+    function formatInterval(end, format) {
+        var fields = {}, match;
+        regex.lastIndex = 0;
+        while ((match = regex.exec(format))) {
+            if (!match[1]) continue;
+            var letter = match[1].charAt(0);
+            if (fields[letter]) break;
+            fields[letter] = true;
+        }
+        if (regex.lastIndex) {
+        	console.log(format.slice(0, match.index), format.slice(match.index));
+            // return this.format() + end.format(format.slice(match.index));
+        } else {
+        	console.log(format);
+            // return this.format(format);
+        }
+    }
+
 	moment.fn.formatInterval = function (endMoment) {
 		return 'interval';
 	};
