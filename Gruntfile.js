@@ -76,15 +76,23 @@ module.exports = function (grunt) {
                 },
                 files: [
                     {
-                        src: ['moment-formatInterval.js.hbs'],
+                        src: ['moment-interval.js.hbs'],
                         expand: true
                     }
                 ]
             }
-        }
+        },
+        uglify: {
+    		my_target: {
+		        files: {
+		        	'moment-interval.min.js': ['moment-interval.js']
+      			}
+    		}
+  		}
     });
 
 	grunt.loadNpmTasks('assemble');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 
-	grunt.registerTask('default', [ 'cldr', 'assemble:interval' ]);
+	grunt.registerTask('default', [ 'cldr', 'assemble:interval', 'uglify' ]);
 };
