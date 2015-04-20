@@ -28,7 +28,7 @@ module.exports = function (grunt) {
 
 			var complete = {};
 			var fmtstr = [];
-			
+
 			files.forEach(function (el, i) {
 				var locale = path.basename(el, '.js'),
 					localeCldr = cldr.extractDateIntervalFormats(locale),
@@ -52,10 +52,8 @@ module.exports = function (grunt) {
 
 			});
 
+			complete.formats = fmtstr
 			localeJSON = JSON.stringify(complete, null, 0);
-
-			fs.writeFileSync('locale/format.js', JSON.stringify(fmtstr, null, 0));
-			fs.writeFileSync('locale/locale.js', localeJSON);
 
 			done();
 		});
@@ -64,8 +62,9 @@ module.exports = function (grunt) {
     grunt.config.merge({
         assemble: {
             options: {
-                formatStrings: ['locale/formatStrings.js'],
-                locale: localeJSON
+                locale: function () {
+                	return localeJSON;
+                }
             },
             interval: {
                 options: {
