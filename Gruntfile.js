@@ -1,19 +1,34 @@
 var cldr = require('cldr');
 var fs = require('fs');
 var path = require('path');
-var crypto = require('crypto');
+var moment = require('moment');
 
 module.exports = function (grunt) {
+
 	grunt.initConfig({
         pkg: grunt.file.readJSON('package.json')
     });
 
+    var localeJSON = '';
+
 	grunt.registerTask('cldr', 'get cldr data', function(a, b) {
 		var done = this.async();
+
+		function cldrToMoment(cldrFormat) {
+			return cldrFormat
+				.replace(/[yad]/g, function (x) { return x.toUpperCase() })
+				.replace('EEEE', 'dddd')
+				.replace('E', 'ddd')
+				.replace('K', 'h')
+				.replace('k', 'H');
+		}
+
 		fs.readdir('node_modules/moment/locale', function (err, files) {
 			if (err) throw err;
+
 			var complete = {};
 			var fmtstr = [];
+			
 			files.forEach(function (el, i) {
 				var locale = path.basename(el, '.js'),
 					localeCldr = cldr.extractDateIntervalFormats(locale),
@@ -26,26 +41,48 @@ module.exports = function (grunt) {
 						Object.keys(localeCldr[key]).forEach(function (format) {
 							var index = fmtstr.indexOf(localeCldr[key][format]);
 							if (index === -1) {
-								index = fmtstr.push(localeCldr[key][format]);
+								index = fmtstr.push(cldrToMoment(localeCldr[key][format]));
 							}
 							localeCldr[key][format] = index;
 						});
 					}
 				});
-
 				var jsonToSting = JSON.stringify(localeCldr, null, 4);
-
-				fs.writeFileSync('locale/' + el , jsonToSting);
-				var md5 = crypto.createHash('md5').update(jsonToSting).digest('hex');
 				complete[locale] = localeCldr;
 
 			});
 
-			console.log(fmtstr);
-			fs.writeFileSync('locale/locale.js', JSON.stringify(complete, null, 0));
+			localeJSON = JSON.stringify(complete, null, 0);
+
+			fs.writeFileSync('locale/format.js', JSON.stringify(fmtstr, null, 0));
+			fs.writeFileSync('locale/locale.js', localeJSON);
+
 			done();
 		});
 	});
 
-	grunt.registerTask('default', [ 'cldr' ]);
+    grunt.config.merge({
+        assemble: {
+            options: {
+                formatStrings: ['locale/formatStrings.js'],
+                locale: localeJSON
+            },
+            interval: {
+                options: {
+                    layout: false,
+                    ext: ''
+                },
+                files: [
+                    {
+                        src: ['moment-formatInterval.js.hbs'],
+                        expand: true
+                    }
+                ]
+            }
+        }
+    });
+
+	grunt.loadNpmTasks('assemble');
+
+	grunt.registerTask('default', [ 'cldr', 'assemble:interval' ]);
 };

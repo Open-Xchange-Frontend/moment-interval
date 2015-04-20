@@ -14,6 +14,7 @@
   "author": "Christoph Hellweg",
   "license": "ISC",
   "devDependencies": {
+    "assemble": "^0.4.42",
     "cldr": "^3.0.0",
     "grunt": "^0.4.5",
     "moment": "^2.9.0"
