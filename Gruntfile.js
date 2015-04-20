@@ -1,7 +1,6 @@
-var cldr = require('cldr');
-var fs = require('fs');
-var path = require('path');
-var moment = require('moment');
+var cldr = require('cldr'),
+	fs = require('fs'),
+	path = require('path');
 
 module.exports = function (grunt) {
 
@@ -27,8 +26,8 @@ module.exports = function (grunt) {
 		fs.readdir('node_modules/moment/locale', function (err, files) {
 			if (err) throw err;
 
-			var complete = {};
-			var fmtstr = [];
+			var complete = {},
+				fmtstr = [];
 
 			// add default language
 			files.push('en.js');
