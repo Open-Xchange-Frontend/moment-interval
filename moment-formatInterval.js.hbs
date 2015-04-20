@@ -18,12 +18,39 @@
     var regex = new RegExp("(G+|y+|Y+|M+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+|z+|Z+|v+|V+)|'((?:[^']|'')+)'|('')", 'g');
 
     function getFormat(end) {
-        var loc = locale[moment.locale()];
+        var loc = locale[moment.locale()],
+            formats = locale.formats;
 
+        if (this.isSame(end, 'day')) {
+            var is12h = this.localeData().longDateFormat('LT').toLowerCase().indexOf('a') > -1,
+                f = is12h ? loc.hm : loc.Hm,
+                m = moment.localeData().meridiem;
+
+            if (is12h && (m(this.hours(), this.minutes(), true) !== m(end.hours(), end.minutes(), true))) {
+                return formats[f.a];
+            } else if (!this.isSame(end, 'hour')) {
+                return formats[is12h ? f.h : f.H];
+            } else if (!this.isSame(end, 'minute')) {
+                return formats[f.m];
+            }
+            return 'LT';
+        } else {
+            var f = loc.yMMMEd;
+            if (!this.isSame(end, 'year')) {
+                return formats[f.y];
+            } else if (!this.isSame(end, 'month')) {
+                return formats[f.M];
+            } else if (!this.isSame(end, 'day')) {
+                return formats[f.d];
+            } else {
+                return 'llll';
+            }
+        }
     }
 
-    function formatInterval(end, format) {
-        var fields = {}, match;
+    function formatInterval(end) {
+        var fields = {}, match,
+            format = getFormat.call(this, end);
         regex.lastIndex = 0;
         while ((match = regex.exec(format))) {
             if (!match[1]) continue;
@@ -32,17 +59,20 @@
             fields[letter] = true;
         }
         if (regex.lastIndex) {
-            console.log(format.slice(0, match.index), format.slice(match.index));
-            // return this.format() + end.format(format.slice(match.index));
+            return this.format(format.slice(0, match.index)) + end.format(format.slice(match.index));
         } else {
-            console.log(format);
-            // return this.format(format);
+            return this.format(format);
         }
     }
 
     moment.fn.formatInterval = function (endMoment) {
-        var end = moment(endMoment);
-        return 'interval';
+        if (!endMoment) {
+            return this.format('llll');
+        }
+        // parse to moment
+        endMoment = moment(endMoment);
+
+        return formatInterval.call(this, endMoment);
     };
 
     var locale = {{{ locale }}};
