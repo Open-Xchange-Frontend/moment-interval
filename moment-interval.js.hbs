@@ -12,16 +12,22 @@
 }(this, function (moment) {
     'use strict';
 
-    // Do not load moment-timezone a second time.
+    // Do not load moment-interval a second time.
     if (moment.fn.formatInterval !== undefined) { return moment; }
 
     var regex = new RegExp("(G+|y+|Y+|M+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+|z+|Z+|v+|V+)|'((?:[^']|'')+)'|('')", 'g');
 
-    function getFormat(end) {
+    /**
+     * get formatstring from locale object
+     * @param  { Moment }   end     enddate of the interval
+     * @param  { Boolean }  time    force time format
+     * @return { String }           moment format string
+     */
+    function getFormat(end, time) {
         var loc = locale[moment.locale()],
             formats = locale.formats;
 
-        if (this.isSame(end, 'day')) {
+        if (time) {
             var is12h = this.localeData().longDateFormat('LT').toLowerCase().indexOf('a') > -1,
                 f = is12h ? loc.hm : loc.Hm,
                 m = moment.localeData().meridiem;
@@ -35,7 +41,7 @@
             }
             return 'LT';
         } else {
-            var f = loc.yMMMEd;
+            var f = loc.yMMMd;
             if (!this.isSame(end, 'year')) {
                 return formats[f.y];
             } else if (!this.isSame(end, 'month')) {
@@ -48,9 +54,14 @@
         }
     }
 
-    function formatInterval(end) {
-        var fields = {}, match,
-            format = getFormat.call(this, end);
+    /**
+     * split formatstring and apply them to moment-format
+     * @param  { Moment } end    enddate of the interval
+     * @param  { String } format moment date foramt string
+     * @return { String }        formated date interval
+     */
+    function formatInterval(end, format) {
+        var fields = {}, match;
         regex.lastIndex = 0;
         while ((match = regex.exec(format))) {
             if (!match[1]) continue;
@@ -65,16 +76,31 @@
         }
     }
 
-    moment.fn.formatInterval = function (endMoment) {
+    /**
+     * define formatInteravl function
+     * @param  { Moment }   end         enddate of the interval
+     * @param  { String }   dateOrTime  force date or time format (optinal)
+     * @return { String }               formated date interval
+     */
+    moment.fn.formatInterval = function (endMoment, dateOrTime) {
+
         if (!endMoment) {
-            return this.format('llll');
+            dateOrTime |= 'date';
+            return this.format(dateOrTime === 'date' ? 'l' : 'LT');
         }
         // parse to moment
         endMoment = moment(endMoment);
 
-        return formatInterval.call(this, endMoment);
+        if (!dateOrTime) {
+            dateOrTime = this.isSame(endMoment, 'day') ? 'time' : 'date';
+        }
+
+        var format = getFormat.call(this, endMoment, dateOrTime === 'time');
+
+        return formatInterval.call(this, endMoment, format);
     };
 
+    // locale data
     var locale = {{{ locale }}};
 
     return moment;
