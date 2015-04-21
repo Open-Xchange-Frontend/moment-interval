@@ -35,7 +35,7 @@ module.exports = function (grunt) {
 			files.forEach(function (el, i) {
 				var locale = path.basename(el, '.js'),
 					localeCldr = cldr.extractDateIntervalFormats(locale),
-					keys = 'hm,Hm,yMMMEd,fallback'.split(',');
+					keys = 'hm,Hm,yMMMd,fallback'.split(',');
 				Object.keys(localeCldr).forEach(function (key) {
 					if (keys.indexOf(key) === -1) {
 						delete localeCldr[key];
