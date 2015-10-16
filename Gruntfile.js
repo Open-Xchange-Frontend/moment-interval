@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 
 		function cldrToMoment(cldrFormat) {
 			return cldrFormat
-				.replace(/[yad]/g, function (x) { return x.toUpperCase() })
+				.replace(/[yad]/g, function (x) { return x.toUpperCase(); })
 				.replace(/Y/g, 'YYYY')
 				.replace(/EEEE/g, 'dddd')
 				.replace(/E/g, 'ddd')

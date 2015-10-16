@@ -1,0 +1,28 @@
+{
+  "name": "moment-interval",
+  "version": "0.0.1",
+  "description": "moment.js plugin to format moment intervals",
+  "authors": [
+    { "name": "Christoph Hellweg" },
+    { "name": "David Bauer", "email": "david.bauer@open-xchange.com"  }
+  ],
+  "ignore": [
+    "**/.*",
+    "Gruntfile.js",
+    "**/*.hbs",
+    "node_modules",
+    "bower_components"
+  ],
+  "main": [
+    "moment-interval.js",
+    "moment-interval.min.js"
+  ],
+  "keywords": [
+    "moment",
+    "interval",
+    "date"
+  ],
+  "dependencies": {
+    "moment": "2.10.6"
+  }
+}

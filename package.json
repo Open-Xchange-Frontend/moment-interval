@@ -11,7 +11,14 @@
     "format",
     "interval"
   ],
-  "author": "Christoph Hellweg",
+  "authors": [
+    { "name": "Christoph Hellweg" },
+    { "name": "David Bauer", "email": "david.bauer@open-xchange.com"  }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Open-Xchange-Frontend/moment-interval.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "assemble": "^0.4.42",
