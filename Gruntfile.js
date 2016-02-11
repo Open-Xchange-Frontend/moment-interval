@@ -21,7 +21,7 @@ module.exports = function (grunt) {
 				.replace(/E/g, 'ddd')
 				.replace(/K/g, 'h')
 				.replace(/k/g, 'H')
-				.replace(/'[^']*'/, match => '[' + match.slice(1,-1) + ']');
+				.replace(/'[^']*'/g, match => '[' + match.slice(1,-1) + ']');
 		}
 
 		fs.readdir('node_modules/moment/locale', function (err, files) {
