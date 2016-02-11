@@ -15,12 +15,13 @@ module.exports = function (grunt) {
 
 		function cldrToMoment(cldrFormat) {
 			return cldrFormat
-				.replace(/[yad]/g, function (x) { return x.toUpperCase(); })
+				.replace(/('[^']*')|[yad]/g, match => match.length === 1 ? match.toUpperCase(match) : match)
 				.replace(/Y/g, 'YYYY')
 				.replace(/EEEE/g, 'dddd')
 				.replace(/E/g, 'ddd')
 				.replace(/K/g, 'h')
-				.replace(/k/g, 'H');
+				.replace(/k/g, 'H')
+				.replace(/'[^']*'/, match => '[' + match.slice(1,-1) + ']');
 		}
 
 		fs.readdir('node_modules/moment/locale', function (err, files) {

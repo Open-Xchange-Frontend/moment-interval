@@ -15,7 +15,7 @@
     // Do not load moment-interval a second time.
     if (moment.fn.formatInterval !== undefined) { return moment; }
 
-    var regex = new RegExp("(G+|y+|Y+|M+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+|z+|Z+|v+|V+)|'((?:[^']|'')+)'|('')", 'g');
+    var regex = /(G+|y+|Y+|M+|w+|W+|D+|d+|F+|E+|u+|a+|H+|k+|K+|h+|m+|s+|S+|z+|Z+|v+|V+)|\[((?:[^\[\]]|\[\])+)\]|(\[\])/g;
 
     /**
      * get formatstring from locale object
