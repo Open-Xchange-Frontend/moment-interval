@@ -95,9 +95,15 @@
             dateOrTime = this.isSame(endMoment, 'day') ? 'time' : 'date';
         }
 
-        var format = getFormat.call(this, endMoment, dateOrTime === 'time');
+        if (dateOrTime !== 'time' && dateOrTime !== 'date') {
+            var format = locale[moment.locale()].fallback;
+            return format.replace('{0}',this.format(dateOrTime)).replace('{1}', endMoment.format(dateOrTime));
+        } else {
+            var format = getFormat.call(this, endMoment, dateOrTime === 'time');
 
-        return formatInterval.call(this, endMoment, format);
+            return formatInterval.call(this, endMoment, format);
+        }
+
     };
 
     // locale data
