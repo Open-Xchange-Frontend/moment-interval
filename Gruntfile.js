@@ -37,6 +37,8 @@ module.exports = function (grunt) {
 				var locale = path.basename(el, '.js'),
 					localeCldr = cldr.extractDateIntervalFormats(locale),
 					keys = 'hm,Hm,yMMMd,fallback'.split(',');
+				localeCldr.fallback = cldr.extractDateIntervalFallbackFormat(locale);
+
 				Object.keys(localeCldr).forEach(function (key) {
 					if (keys.indexOf(key) === -1) {
 						delete localeCldr[key];
