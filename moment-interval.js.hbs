@@ -25,12 +25,13 @@
      */
     function getFormat(end, time) {
         var loc = locale[moment.locale()],
-            formats = locale.formats;
+            formats = locale.formats,
+            f;
 
         if (time) {
             var is12h = this.localeData().longDateFormat('LT').toLowerCase().indexOf('a') > -1,
-                f = is12h ? loc.hm : loc.Hm,
                 m = moment.localeData().meridiem;
+            f = is12h ? loc.hm : loc.Hm;
 
             if (is12h && (m(this.hours(), this.minutes(), true) !== m(end.hours(), end.minutes(), true))) {
                 return formats[f.a];
@@ -41,7 +42,7 @@
             }
             return 'LT';
         } else {
-            var f = loc.yMMMd;
+            f = loc.yMMMd;
             if (!this.isSame(end, 'year')) {
                 return formats[f.y];
             } else if (!this.isSame(end, 'month')) {
@@ -94,12 +95,12 @@
         if (!dateOrTime) {
             dateOrTime = this.isSame(endMoment, 'day') ? 'time' : 'date';
         }
-
+        var format;
         if (dateOrTime !== 'time' && dateOrTime !== 'date') {
-            var format = locale[moment.locale()].fallback;
+            format = locale[moment.locale()].fallback;
             return format.replace('{0}',this.format(dateOrTime)).replace('{1}', endMoment.format(dateOrTime));
         } else {
-            var format = getFormat.call(this, endMoment, dateOrTime === 'time');
+            format = getFormat.call(this, endMoment, dateOrTime === 'time');
 
             return formatInterval.call(this, endMoment, format);
         }

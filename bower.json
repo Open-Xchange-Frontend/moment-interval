@@ -13,10 +13,7 @@
     "node_modules",
     "bower_components"
   ],
-  "main": [
-    "moment-interval.js",
-    "moment-interval.min.js"
-  ],
+  "main": "moment-interval.js",
   "keywords": [
     "moment",
     "interval",

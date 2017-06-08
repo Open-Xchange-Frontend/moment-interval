@@ -2,7 +2,7 @@
   "name": "moment-interval",
   "version": "0.0.1",
   "description": "moment.js plugin to format moment intervals",
-  "main": "index.js",
+  "main": "moment-interval.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,8 +12,13 @@
     "interval"
   ],
   "authors": [
-    { "name": "Christoph Hellweg" },
-    { "name": "David Bauer", "email": "david.bauer@open-xchange.com"  }
+    {
+      "name": "Christoph Hellweg"
+    },
+    {
+      "name": "David Bauer",
+      "email": "david.bauer@open-xchange.com"
+    }
   ],
   "repository": {
     "type": "git",
@@ -21,10 +26,11 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "assemble": "^0.4.42",
-    "cldr": "^3.0.0",
-    "grunt": "^0.4.5",
-    "grunt-contrib-uglify": "^0.9.1",
-    "moment": "^2.9.0"
+    "cldr": "^4.5.0",
+    "grunt": "^1.0.1",
+    "grunt-assemble": "^0.6.3",
+    "grunt-contrib-uglify": "^3.0.1",
+    "grunt-eslint": "^19.0.0",
+    "moment": "^2.18.1"
   }
 }
