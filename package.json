@@ -1,6 +1,6 @@
 {
   "name": "@open-xchange/moment-interval",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "moment.js plugin to format moment intervals",
   "main": "moment-interval.js",
   "scripts": {
